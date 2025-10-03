@@ -1,0 +1,22 @@
+{
+  "name": "playwrighttemplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LjubicaTopisirovic/PlaywrightTemplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LjubicaTopisirovic/PlaywrightTemplate/issues"
+  },
+  "homepage": "https://github.com/LjubicaTopisirovic/PlaywrightTemplate#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@types/node": "^24.6.2"
+  }
+}
