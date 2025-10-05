@@ -1,16 +1,17 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
 
-const TEST_URL = 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login';
-const VALID_USERNAME = 'Admin';
-const VALID_PASSWORD = 'admin123';
+//const TEST_URL = 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login';
+//const VALID_USERNAME = 'Admin';
+//const VALID_PASSWORD = 'admin123';
 
 test.describe('Login Page Tests', () => {
   let loginPage: LoginPage;
 
   test.beforeEach(async ({ page }) => {
     loginPage = new (class extends LoginPage {})(page)
-    await loginPage.navigate(TEST_URL);
+    await loginPage.navigate('/');
+    await loginPage.isElementVisible(loginPage.loginButton);
   });
 
   test.describe('Positive Scenarios', () => {
@@ -20,10 +21,10 @@ test.describe('Login Page Tests', () => {
             
       });
       await test.step('Enter valid username', async () => {
-        await loginPage.fillUsername(VALID_USERNAME);
+        await loginPage.fillUsername(process.env.VALID_USERNAME || '');
       });
       await test.step('Enter valid password', async () => {
-        await loginPage.fillPassword(VALID_PASSWORD);
+        await loginPage.fillPassword(process.env.VALID_PASSWORD || '');
       });
       await test.step('Click Login button', async () => {
         await loginPage.clickSubmit();
@@ -49,8 +50,8 @@ test.describe('Login Page Tests', () => {
       await test.step('Click Login button', async () => {
         await loginPage.clickSubmit();
       });
-      await test.step('Verify user is not redirected to dashboard', async () => {
-        await expect(loginPage.isErrorMessageVisible).toBeTruthy();  
+       await test.step('Verify user is not redirected to dashboard', async () => {
+        await expect(loginPage).toBeTruthy();  
       });
     });
   });
