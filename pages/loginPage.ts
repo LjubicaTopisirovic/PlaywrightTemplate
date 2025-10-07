@@ -10,14 +10,6 @@ export abstract class LoginPage extends LoginLocators {
     await this.page.goto(url);
   }
 
-  async waitForElement(selector: string): Promise<void> {
-    await this.page.waitForSelector(selector);
-  }
-
-  async isElementVisible(selector: string): Promise<boolean> {
-    return await this.page.isVisible(selector);
-  }
-
    async fillUsername(username: string): Promise<void> {
     await this.page.fill(this.usernameInput, username);
   }
@@ -26,17 +18,21 @@ export abstract class LoginPage extends LoginLocators {
     await this.page.fill(this.passwordInput, password);
   }
 
-  async clickSubmit(): Promise<void> {
+  async clickLogin(): Promise<void> {
     await this.page.click(this.loginButton);
   }
 
   async login(username: string, password: string): Promise<void> {
     await this.fillUsername(username);
     await this.fillPassword(password);
-    await this.clickSubmit();
+    await this.clickLogin();
   }
 
-  async isErrorMessageVisible(): Promise<boolean> {
-    return await this.isElementVisible(this.errorMessage); 
+  async waitForElement(selector: string): Promise<void> {
+    await this.page.waitForSelector(selector);
+  }
+
+  async isElementVisible(selector: string): Promise<boolean> {
+    return await this.page.isVisible(selector);
   }
 } 
