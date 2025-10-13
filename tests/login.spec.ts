@@ -1,12 +1,15 @@
 import { test, expect } from '@playwright/test';
+import { BasePage } from '../pages/basePage';
 import { LoginPage } from '../pages/loginPage';
-
 
 test.describe('Login Page Tests', () => {
   let loginPage: LoginPage;
+  let basePage: BasePage;
 
   test.beforeEach(async ({ page }) => {
     loginPage = new (class extends LoginPage {})(page)
+    basePage = new (class extends BasePage {})(page)
+
     await loginPage.navigate('/');
   });
 
@@ -26,6 +29,9 @@ test.describe('Login Page Tests', () => {
       });
       await test.step('Verify user is redirected to dashboard', async () => {
         await expect(page).toHaveURL(/dashboard/);
+      });
+      await test.step('Verify the presence of the top bar breadcrumb', async () => {
+        await expect(basePage.isElementVisible(basePage.topBarBreadcrumb)).toBeTruthy();
       });
     });
   });
@@ -48,7 +54,7 @@ test.describe('Login Page Tests', () => {
         await expect(page).toHaveURL(/login/);
       });
       await test.step('Verify alert error apears', async () => {
-        await expect(loginPage.isElementVisible(loginPage.errorMessage)).toBeTruthy();
+        await expect(basePage.isElementVisible('Invalid credentials')).toBeTruthy();
       });
     });
   });

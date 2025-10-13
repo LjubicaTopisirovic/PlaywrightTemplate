@@ -1,9 +1,12 @@
 import { Page } from '@playwright/test';
+import { BasePage } from './basePage';
 import { LoginLocators } from '../locators/loginLocators';
 
-export abstract class LoginPage extends LoginLocators {
-  constructor(protected page: Page) {
-    super();
+export class LoginPage extends BasePage {
+  private loginLocators = new LoginLocators();
+
+  constructor(page: Page) {
+    super(page);
   }
 
   async navigate(url: string): Promise<void> {
@@ -11,15 +14,15 @@ export abstract class LoginPage extends LoginLocators {
   }
 
    async fillUsername(username: string): Promise<void> {
-    await this.page.fill(this.usernameInput, username);
+    await this.page.fill(this.loginLocators.usernameInput, username);
   }
 
   async fillPassword(password: string): Promise<void> {
-    await this.page.fill(this.passwordInput, password);
+    await this.page.fill(this.loginLocators.passwordInput, password);
   }
 
   async clickLogin(): Promise<void> {
-    await this.page.click(this.loginButton);
+    await this.page.click(this.loginLocators.loginButton);
   }
 
   async login(username: string, password: string): Promise<void> {
@@ -28,11 +31,4 @@ export abstract class LoginPage extends LoginLocators {
     await this.clickLogin();
   }
 
-  async waitForElement(selector: string): Promise<void> {
-    await this.page.waitForSelector(selector);
-  }
-
-  async isElementVisible(selector: string): Promise<boolean> {
-    return await this.page.isVisible(selector);
-  }
 } 
